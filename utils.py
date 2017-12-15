@@ -24,18 +24,19 @@ def load_ratings(fname):
     num_users = ratings.userId.nunique()
     num_movies = ratings.movieId.nunique()
     data = {
+        'ratings': np.zeros((num_users, num_movies), dtype=np.float32),
         'train': {
-            'ratings': np.zeros((num_users, num_movies), dtype=np.float32),
+            'mask': np.zeros((num_users, num_movies), dtype=np.float32),
             'users': set(),
             'movies': set(),
         },
         'val': {
-            'ratings': np.zeros((num_users, num_movies), dtype=np.float32),
+            'mask': np.zeros((num_users, num_movies), dtype=np.float32),
             'users': set(),
             'movies': set(),
         },
         'test': {
-            'ratings': np.zeros((num_users, num_movies), dtype=np.float32),
+            'mask': np.zeros((num_users, num_movies), dtype=np.float32),
             'users': set(),
             'movies': set(),
         },
@@ -45,7 +46,8 @@ def load_ratings(fname):
         for row in ratings.iloc[indices].itertuples():
             user_idx = get_user_idx(row.userId)
             movie_idx = get_movie_idx(row.movieId)
-            data[k]['ratings'][user_idx, movie_idx] = row.rating
+            data['ratings'][user_idx, movie_idx] = row.rating
+            data[k]['mask'][user_idx, movie_idx] = 1
             data[k]['users'].add(user_idx)
             data[k]['movies'].add(movie_idx)
             
