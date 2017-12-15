@@ -10,6 +10,7 @@ class AutoRec:
                  lr=0.001,
                  penalty=0.001,
                  keep=0.9,
+                 **kwargs
                 ):
         tf.reset_default_graph()
         tl.layers.clear_layers_name()
@@ -58,12 +59,15 @@ class AutoRec:
         input_mask = (r != 0).astype(np.float32)
         return r, input_mask
         
-    def train(self, n_epochs=100, shuffle_batch=False):
+    def train(self, n_epochs=100, shuffle_batch=True):
         n_train_batches = (len(self.data['ratings']) // self.batch_size) + 1
         epoch = 0
         while epoch < n_epochs:
             total_cost = 0
-            for minibatch_index in xrange(n_train_batches):
+            minibatch_indices = range(n_train_batches)
+            if shuffle_batch:
+                np.random.shuffle(minibatch_indices)
+            for minibatch_index in minibatch_indices:
                 r, input_mask = self.get_batch(self.data['ratings'], minibatch_index, n_train_batches)
                 feed_dict = { self.r: r, self.input_mask: input_mask, self.output_mask: input_mask }
                 feed_dict.update(self.network.all_drop) # enable dropout

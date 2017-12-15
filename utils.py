@@ -2,12 +2,12 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-def load_ratings(fname):
+def load_ratings(fname, random_state=42):
     ratings = pd.read_csv(fname, delimiter='::', names=['userId', 'movieId', 'rating', 'timestamp'])
     
     indices = range(len(ratings))
-    train_val_indices, test_indices = train_test_split(indices, test_size=0.1, random_state=42)
-    train_indices, val_indices = train_test_split(train_val_indices, test_size=0.1, random_state=42)
+    train_val_indices, test_indices = train_test_split(indices, test_size=0.1, random_state=random_state)
+    train_indices, val_indices = train_test_split(train_val_indices, test_size=0.1, random_state=random_state)
     
     movie_idxs = {}
     user_idxs = {}

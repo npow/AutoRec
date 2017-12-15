@@ -9,19 +9,14 @@ flags.DEFINE_integer('hidden_size', 500, 'hidden size')
 flags.DEFINE_integer('n_epochs', 50, 'num epochs')
 flags.DEFINE_float('lr', 0.005, 'learning rate')
 flags.DEFINE_float('penalty', 1, 'regularization penalty')
+flags.DEFINE_float('keep', 0.9, 'dropout keep probability')
+flags.DEFINE_float('random_state', 1234, 'random state seed')
 FLAGS = flags.FLAGS
 
 def main(_):
     print(FLAGS.__flags)
-    data = load_ratings('%s/ratings.dat' % FLAGS.input_dir)                
-    args = {
-        'batch_size': FLAGS.batch_size,
-        'hidden_size': FLAGS.hidden_size,
-        'lr': FLAGS.lr,
-        'data': data,
-        'penalty': FLAGS.penalty,
-    }
-    model = AutoRec(**args)
+    FLAGS.data = load_ratings('%s/ratings.dat' % FLAGS.input_dir, random_state=FLAGS.random_state)
+    model = AutoRec(**FLAGS.__flags)
     model.train(n_epochs=FLAGS.n_epochs)
 
 if __name__ == '__main__':
