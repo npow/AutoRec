@@ -10,7 +10,7 @@ flags.DEFINE_integer('n_epochs', 50, 'num epochs')
 flags.DEFINE_float('lr', 0.005, 'learning rate')
 flags.DEFINE_float('penalty', 1, 'regularization penalty')
 flags.DEFINE_float('keep', 0.9, 'dropout keep probability')
-flags.DEFINE_float('random_state', 1234, 'random state seed')
+flags.DEFINE_integer('random_state', 1234, 'random state seed')
 FLAGS = flags.FLAGS
 
 def main(_):
