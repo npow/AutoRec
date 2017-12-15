@@ -4,7 +4,7 @@ This is a TensorFlow implementation of [AutoRec](http://users.cecs.anu.edu.au/~u
 
 "AutoRec: Autoencoders Meet Collaborative Filtering". Suvash Sedhain, Aditya Krishna Menon, Scott Sanner, and Lexing Xie. 2015.  
 
-<img src="https://github.com/npow/autorec/blob/master/autorec.png" />
+<img src="https://github.com/npow/autorec/blob/master/autorec.png" width="50%" height="50%" />
 
 # Requirements
 * numpy
